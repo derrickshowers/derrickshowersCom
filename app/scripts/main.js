@@ -1,4 +1,4 @@
-import ProcessForm from './process-form';
+import ProcessForm from 'process-form';
 import $ from 'jquery';
 
 function init() {
