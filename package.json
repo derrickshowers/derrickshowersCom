@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "ssh dshowers@derrickshowers.com 'rm -rf /home/dshowers/sites/derrickshowers.com/*' && scp -r dist/* dshowers@derrickshowers.com:/home/dshowers/sites/derrickshowers.com/"
   },
   "author": "",
   "license": "ISC",
