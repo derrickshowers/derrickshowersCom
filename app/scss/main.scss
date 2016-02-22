@@ -8,6 +8,7 @@ $lightgray: #EAEDF2;
 $errorLightRed: #FFD0D0;
 $errorDarkRed: #B10000;
 $successGreen: #088A08;
+$white: #FFFFFF;
 
 // MIXINS/FUNCTIONS
 @mixin screen-reader-text() {
@@ -70,6 +71,16 @@ header {
 
 section {
   margin: 25px 0;
+}
+
+.alert-banner {
+  padding: 10px 0;
+  top: -10px;
+  position: relative;
+  background-color: $errorDarkRed;
+  color: $white;
+  font-size: .9rem;
+  display: none;
 }
 
 .social-list {
@@ -171,6 +182,13 @@ footer {
   text-align: center;
   padding: 20px 0 10px;
   font-size: .75rem;
+}
+
+// OFFLINE
+.offline {
+  .alert-banner {
+    display: block;
+  }
 }
 
 // MEDIA QUERIES

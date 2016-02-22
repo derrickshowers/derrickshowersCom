@@ -62,10 +62,10 @@ gulp.task('webpack', function(callback) {
 
 gulp.task('webpack-dev-server', function(callback) {
   var myConfig = Object.create(webpackConfig);
-  myConfig.entry.path.push('webpack-dev-server/client?http://localhost:8080');
+  myConfig.entry.main.push('webpack-dev-server/client?http://localhost:8080');
   new WebpackDevServer(webpack(myConfig), {
     contentBase: 'dist',
-    publicPath: '/' + myConfig.output.publicPath,
+    publicPath: '/',
     stats: {
 			colors: true
 		}
