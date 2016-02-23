@@ -3,6 +3,8 @@ var sass = require('gulp-sass');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
 var clean = require('gulp-clean');
+var rsync = require('gulp-rsync');
+var runSequence = require('run-sequence');
 var WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./webpack.config');
 
@@ -45,6 +47,18 @@ gulp.task('movePublic:watch', function () {
   return gulp.watch('app/public/', ['movePublic']);
 });
 
+gulp.task('deploy', function() {
+  return gulp.src('dist')
+    .pipe(rsync({
+      root: 'dist',
+      username: 'dshowers',
+      hostname: 'derrickshowers.com',
+      recursive: true,
+      clean: true,
+      destination: '/home/dshowers/sites/derrickshowers.com/'
+    }));
+});
+
 gulp.task('webpack', function(callback) {
   var myConfig = Object.create(webpackConfig);
   myConfig.plugins = [
@@ -81,3 +95,6 @@ gulp.task('webpack-dev-server', function(callback) {
 
 gulp.task('dev', ['moveIndex:watch', 'movePublic:watch', 'sass:watch', 'webpack-dev-server']);
 gulp.task('build', ['moveIndex', 'movePublic', 'sass:prod', 'webpack']);
+gulp.task('deploy-prod', function() {
+  runSequence('build','deploy');
+});
