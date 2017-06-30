@@ -3,9 +3,6 @@
   "version": "0.0.2",
   "description": "",
   "main": "index.html",
-  "scripts": {
-    "deploy": "ssh dshowers@derrickshowers.com 'rm -rf /home/dshowers/sites/derrickshowers.com/*' && scp -r dist/* dshowers@derrickshowers.com:/home/dshowers/sites/derrickshowers.com/"
-  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
