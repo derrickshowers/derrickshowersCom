@@ -4,6 +4,13 @@ import $ from 'jquery';
 function init() {
   let fieldTypes = 'input[type="text"], input[type="email"], textarea';
   let $alertMessageEl = $('.alert-message');
+  let $submitMessageEl = $('#submit')
+
+  // Before submitting form, make sure it's a real person
+  $submitMessageEl.on('click', function() {
+    grecaptcha.execute();
+  });
+
   let contactForm = new ProcessForm($('.contact-form'), fieldTypes, function(data) {
     $alertMessageEl.text('Message sent!');
     $alertMessageEl.addClass('visible success');
