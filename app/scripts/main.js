@@ -1,9 +1,14 @@
-import ProcessForm from 'process-form';
 import $ from 'jquery';
 import style from '../scss/main.scss';
 
 function init() {
   let $alertMessageEl = $('.alert-message');
+
+  function resetForm() {
+    $('#email').val('');
+    $('#name').val('');
+    $('#message').val('');
+  }
 
   $('.contact-form').submit(function(e) {
     e.preventDefault();
@@ -13,7 +18,7 @@ function init() {
     $.post($form.attr('action'), $form.serialize()).then(function() {
       $alertMessageEl.text('Message sent!');
       $alertMessageEl.addClass('visible success');
-      this.resetForm();
+      resetForm()
       window.setTimeout(() => {
         $alertMessageEl.removeClass('visible');
       }, 5000);
