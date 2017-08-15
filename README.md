@@ -7,7 +7,10 @@ Repo for [derrickshowers.com](http://derrickshowers.com).
 Run the following commands to get started:
 
     npm install
-    gulp build
-    gulp dev
+    npm run dev
 
-Navigate your browser to [http://localhost:8080](http://localhost:8080).
+Navigate to [http://localhost:8080](http://localhost:8080).
+
+Or to build without running the dev server:
+
+    npm run build

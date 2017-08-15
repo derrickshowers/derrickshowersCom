@@ -1,6 +1,6 @@
 /* globals caches: true, self: true */
 
-const CACHE_NAME = 'derrickshowers-v0.0.2';
+const CACHE_NAME = 'derrickshowers-v0.0.3';
 const urlsToCache = [
   '/',
   '/css/main.css',

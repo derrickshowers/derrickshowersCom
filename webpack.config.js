@@ -1,4 +1,6 @@
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -9,13 +11,38 @@ module.exports = {
     path: path.join(__dirname, 'dist/'),
     filename: '[name].js'
   },
+  devServer: {
+    contentBase: './dist'
+  },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
-        exclude: /node_modules/
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('css/main.css', {
+      allChunks: true
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: './app/index.html',
+        to: 'index.html'
+      },
+      {
+        from: './app/public',
+        to: 'public'
+      }
+    ])
+  ]
 };
