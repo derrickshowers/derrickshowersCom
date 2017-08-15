@@ -1,38 +1,13 @@
 import $ from 'jquery';
+import contactForm from './contact-form';
 import style from '../scss/main.scss';
 
 function init() {
-  let $alertMessageEl = $('.alert-message');
-
-  function resetForm() {
-    $('#email').val('');
-    $('#name').val('');
-    $('#message').val('');
-  }
-
-  $('.contact-form').submit(function(e) {
-    e.preventDefault();
-
-    var $form = $(this);
-
-    $.post($form.attr('action'), $form.serialize()).then(function() {
-      $alertMessageEl.text('Message sent!');
-      $alertMessageEl.addClass('visible success');
-      resetForm()
-      window.setTimeout(() => {
-        $alertMessageEl.removeClass('visible');
-      }, 5000);
-    }, function() {
-      $alertMessageEl.text('Uh oh, something went wrong. :/');
-      $alertMessageEl.addClass('visible error');
-      window.setTimeout(() => {
-        $alertMessageEl.removeClass('visible');
-      }, 5000);
-    });
-  });
+  contactForm();
 }
 
 // Register a service worker
+// TODO: Reimplement with caching issues fixed
 /**
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', event => {
