@@ -5,6 +5,11 @@
   "main": "index.html",
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "build": "gulp build",
+    "dev": "gulp build && gulp dev",
+    "deploy": "gulp deploy-prod"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-clean": "^0.3.1",
