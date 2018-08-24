@@ -177,6 +177,9 @@ section {
       color: $errorDarkRed;
     }
   }
+  #favorite-color {
+    display: none;
+  }
 }
 footer {
   text-align: center;

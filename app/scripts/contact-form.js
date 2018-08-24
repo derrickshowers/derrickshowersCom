@@ -20,9 +20,28 @@ function failure() {
   }, 5000);
 }
 
+function isSpam() {
+  if ($('#favorite-color').val() === '') {
+    return false
+  }
+  return true;
+}
+
+function overrideHandleSubmit(processForm) {
+  processForm.handleSubmit = function(evt) {
+    evt.preventDefault();
+    if (!this.checkForErrors() && !isSpam()) {
+      this.submitForm().then(this.successCallback, this.errorCallback);
+    }
+    this.renderErrors();
+  }
+}
+
 export default function() {
   let $form = $('.contact-form');
   let fieldTypes = 'input[type="text"], input[type="email"], textarea';
 
-  return new ProcessForm($form, fieldTypes, success, failure);
+  let processForm = new ProcessForm($form, fieldTypes, success, failure);
+  overrideHandleSubmit(processForm);
+  return processForm;
 }
