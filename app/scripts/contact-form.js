@@ -18,13 +18,13 @@ function sendData(url, data) {
   xhr.send(data);
 }
 
-function onError(evt) {
+function onSuccess(evt) {
   alertMessageEl.textContent = 'Message sent!';
   alertMessageEl.classList.add('visible', 'success');
   resetForm();
 }
 
-function onSuccess(evt) {
+function onError(evt) {
   alertMessageEl.textContent = 'Uh oh, something went wrong. :/';
   alertMessageEl.classList.add('visible', 'error');
   resetForm();
