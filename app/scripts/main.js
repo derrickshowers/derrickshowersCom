@@ -29,7 +29,7 @@ function setupform() {
         alertMessageEl.classList.remove('visible');
       }, 5000);
     });
-    xhr.send(new URLSearchParams(new FormData(formEl)).toString());
+    xhr.send(nformData);
   });
 }
 
