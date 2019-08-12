@@ -1,52 +1,48 @@
-import $ from 'jquery';
 import style from '../scss/main.scss';
 
 function init() {
-  let $alertMessageEl = $('.alert-message');
+  updateFooter();
+  setupform();
+}
 
-  function resetForm() {
-    $('#email').val('');
-    $('#name').val('');
-    $('#message').val('');
-  }
-
-  $('.contact-form').submit(function(e) {
-    e.preventDefault();
-
-    var $form = $(this);
-
-    $.post($form.attr('action'), $form.serialize()).then(function() {
-      $alertMessageEl.text('Message sent!');
-      $alertMessageEl.addClass('visible success');
-      resetForm()
+function setupform() {
+  let formEl = document.getElementsByClassName('contact-form')[0];
+  let alertMessageEl = document.getElementsByClassName('alert-message')[0];
+  formEl.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    let formData = new FormData(formEl);
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', formEl.attributes.action.value);
+    xhr.addEventListener('load', function(evt) {
+      alertMessageEl.textContent = 'Message sent!';
+      alertMessageEl.classList.add('visible', 'success');
+      resetForm();
       window.setTimeout(() => {
-        $alertMessageEl.removeClass('visible');
-      }, 5000);
-    }, function() {
-      $alertMessageEl.text('Uh oh, something went wrong. :/');
-      $alertMessageEl.addClass('visible error');
-      window.setTimeout(() => {
-        $alertMessageEl.removeClass('visible');
+        alertMessageEl.classList.remove('visible');
       }, 5000);
     });
+    xhr.addEventListener('error', function(evt) {
+      alertMessageEl.textContent = 'Uh oh, something went wrong. :/';
+      alertMessageEl.classList.add('visible', 'error');
+      resetForm();
+      window.setTimeout(() => {
+        alertMessageEl.classList.remove('visible');
+      }, 5000);
+    });
+    xhr.send(new URLSearchParams(new FormData(formEl)).toString());
   });
 }
 
-// Register a service worker
-/**
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.addEventListener('message', event => {
-    if (event.data && event.data.offline) {
-      $('body').addClass('offline');
-      $('button').prop('disabled', true);
-    }
-  });
-  navigator.serviceWorker.register('/sw.js').then(registration => {
-    console.log('ServiceWorker registration success: ', registration);
-  }).catch(function(err) {
-    console.log('ServiceWorker registration failed: ', err);
-  });
+function updateFooter() {
+  const currentYear = new Date().getFullYear();
+  const footertext = '\u00A9' + currentYear + ' Derrick Showers';
+  document.getElementsByTagName('footer')[0].textContent = footertext;
 }
-**/
+
+function resetForm() {
+  document.getElementById('email').value = '';
+  document.getElementById('name').value = '';
+  document.getElementById('message').value = '';
+}
 
 init();
