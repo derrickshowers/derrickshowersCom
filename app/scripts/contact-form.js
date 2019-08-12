@@ -1,47 +1,40 @@
-import $ from 'jquery';
-import ProcessForm from 'process-form';
+const formMethod = 'POST';
+let alertMessageEl;
 
-let $alertMessageEl = $('.alert-message');
-
-function success() {
-  $alertMessageEl.text('Message sent!');
-  $alertMessageEl.addClass('visible success');
-  this.resetForm()
+function resetForm() {
   window.setTimeout(() => {
-    $alertMessageEl.removeClass('visible');
+    alertMessageEl.classList.remove('visible');
   }, 5000);
+  document.getElementById('email').value = '';
+  document.getElementById('name').value = '';
+  document.getElementById('message').value = '';
 }
 
-function failure() {
-  $alertMessageEl.text('Uh oh, something went wrong. :/');
-  $alertMessageEl.addClass('visible error');
-  window.setTimeout(() => {
-    $alertMessageEl.removeClass('visible');
-  }, 5000);
+function sendData(url, data) {
+  const xhr = new XMLHttpRequest();
+  xhr.open(formMethod, url);
+  xhr.addEventListener('load', onSuccess);
+  xhr.addEventListener('error', onError);
+  xhr.send(data);
 }
 
-function isSpam() {
-  if ($('#favorite-color').val() === '') {
-    return false
-  }
-  return true;
+function onError(evt) {
+  alertMessageEl.textContent = 'Message sent!';
+  alertMessageEl.classList.add('visible', 'success');
+  resetForm();
 }
 
-function overrideHandleSubmit(processForm) {
-  processForm.handleSubmit = function(evt) {
+function onSuccess(evt) {
+  alertMessageEl.textContent = 'Uh oh, something went wrong. :/';
+  alertMessageEl.classList.add('visible', 'error');
+  resetForm();
+}
+
+export function setup() {
+  alertMessageEl = document.getElementsByClassName('alert-message')[0];
+  const formEl = document.getElementsByClassName('contact-form')[0];
+  formEl.addEventListener('submit', function(evt) {
     evt.preventDefault();
-    if (!this.checkForErrors() && !isSpam()) {
-      this.submitForm().then(this.successCallback, this.errorCallback);
-    }
-    this.renderErrors();
-  }
-}
-
-export default function() {
-  let $form = $('.contact-form');
-  let fieldTypes = 'input[type="text"], input[type="email"], textarea';
-
-  let processForm = new ProcessForm($form, fieldTypes, success, failure);
-  overrideHandleSubmit(processForm);
-  return processForm;
+    sendData(formEl.attributes.action.value, new FormData(formEl));
+  });
 }

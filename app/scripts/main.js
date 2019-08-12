@@ -1,27 +1,15 @@
-import $ from 'jquery';
-import contactForm from './contact-form';
 import style from '../scss/main.scss';
+import { setup as setupContactForm } from './contact-form';
 
 function init() {
-  contactForm();
+  updateFooter();
+  setupContactForm();
 }
 
-// Register a service worker
-// TODO: Reimplement with caching issues fixed
-/**
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.addEventListener('message', event => {
-    if (event.data && event.data.offline) {
-      $('body').addClass('offline');
-      $('button').prop('disabled', true);
-    }
-  });
-  navigator.serviceWorker.register('/sw.js').then(registration => {
-    console.log('ServiceWorker registration success: ', registration);
-  }).catch(function(err) {
-    console.log('ServiceWorker registration failed: ', err);
-  });
+function updateFooter() {
+  const currentYear = new Date().getFullYear();
+  const footerText = '\u00A9' + currentYear + ' Derrick Showers';
+  document.getElementsByTagName('footer')[0].textContent = footerText;
 }
-**/
 
 init();
