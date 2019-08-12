@@ -8,8 +8,8 @@ function init() {
 
 function updateFooter() {
   const currentYear = new Date().getFullYear();
-  const footertext = '\u00A9' + currentYear + ' Derrick Showers';
-  document.getElementsByTagName('footer')[0].textContent = footertext;
+  const footerText = '\u00A9' + currentYear + ' Derrick Showers';
+  document.getElementsByTagName('footer')[0].textContent = footerText;
 }
 
 init();

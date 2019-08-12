@@ -1,4 +1,5 @@
-let alertMessageEl = document.getElementsByClassName('alert-message')[0];
+const formMethod = 'POST';
+let alertMessageEl;
 
 function resetForm() {
   window.setTimeout(() => {
@@ -10,8 +11,8 @@ function resetForm() {
 }
 
 function sendData(url, data) {
-  let xhr = new XMLHttpRequest();
-  xhr.open('POST', url);
+  const xhr = new XMLHttpRequest();
+  xhr.open(formMethod, url);
   xhr.addEventListener('load', onSuccess);
   xhr.addEventListener('error', onError);
   xhr.send(data);
@@ -30,7 +31,8 @@ function onSuccess(evt) {
 }
 
 export function setup() {
-  let formEl = document.getElementsByClassName('contact-form')[0];
+  alertMessageEl = document.getElementsByClassName('alert-message')[0];
+  const formEl = document.getElementsByClassName('contact-form')[0];
   formEl.addEventListener('submit', function(evt) {
     evt.preventDefault();
     sendData(formEl.attributes.action.value, new FormData(formEl));
